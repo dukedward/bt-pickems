@@ -72,7 +72,7 @@ export default function GameCard({
             </span>
           )}
           {isCompleted && (
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-accent">
+            <span className="flex items-center gap-1.5 text-muted-foreground text-xs font-semibold">
               <Check className="w-3 h-3" />
               FINAL
             </span>
