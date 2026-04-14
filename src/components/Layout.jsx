@@ -108,6 +108,18 @@ export default function Layout() {
           </nav>
 
           <div className="flex items-center gap-2">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            </button>
             {/* Login/Logout button */}
             {user ? (
               <button
