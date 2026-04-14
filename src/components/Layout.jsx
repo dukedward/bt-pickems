@@ -1,6 +1,16 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
-import { Trophy, BarChart3, User, Menu, X, LogOut, LogIn } from "lucide-react";
-import { useState } from "react";
+import {
+  Trophy,
+  BarChart3,
+  User,
+  Menu,
+  X,
+  LogOut,
+  LogIn,
+  Sun,
+  Moon,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../lib/AuthContext";
 import LiveGameAlerts from "./LiveGameAlerts";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,6 +25,40 @@ export default function Layout() {
   const { user, logout, navigateToLogin } = useAuth();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved === "light" || saved === "dark") return saved;
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    setMobileOpen(false);
+  };
+
+  const handleLogin = async () => {
+    await navigateToLogin();
+    setMobileOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-background font-inter">
@@ -125,6 +169,36 @@ export default function Layout() {
                     </Link>
                   );
                 })}
+
+                <button
+                  onClick={toggleTheme}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                >
+                  {theme === "dark" ? (
+                    <Sun className="w-4 h-4" />
+                  ) : (
+                    <Moon className="w-4 h-4" />
+                  )}
+                  {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                </button>
+
+                {user ? (
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Logout
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleLogin}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                  >
+                    <LogIn className="w-4 h-4" />
+                    Login
+                  </button>
+                )}
               </nav>
             </motion.div>
           )}
