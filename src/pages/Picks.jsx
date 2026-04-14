@@ -29,6 +29,13 @@ function buildWeekOptions(seasonType) {
     ];
   }
 
+  if (Number(seasonType) === 1) {
+    return Array.from({ length: 4 }, (_, i) => ({
+      value: i + 1,
+      label: `Week ${i + 1}`,
+    }));
+  }
+
   return Array.from({ length: 18 }, (_, i) => ({
     value: i + 1,
     label: `Week ${i + 1}`,
