@@ -260,6 +260,9 @@ export default function Stats() {
     return (
       <div className="bg-card rounded-xl border border-destructive/30 p-4 text-sm text-destructive">
         Failed to load stats.
+        <pre className="mt-2 whitespace-pre-wrap text-xs">
+          {String(picksError?.message || profilesError?.message || "")}
+        </pre>
       </div>
     );
   }
@@ -300,6 +303,7 @@ export default function Stats() {
               onChange={(e) => setSeasonType(Number(e.target.value))}
               className="h-10 rounded-lg border border-border bg-card px-3 text-sm text-foreground"
             >
+              <option value={1}>Pre-Season</option>
               <option value={2}>Regular Season</option>
               <option value={3}>Postseason</option>
             </select>

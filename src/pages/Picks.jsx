@@ -243,6 +243,7 @@ export default function Picks() {
               }}
               className="h-10 rounded-lg border border-border bg-card px-3 text-sm text-foreground"
             >
+              <option value={1}>Pre-Season</option>
               <option value={2}>Regular Season</option>
               <option value={3}>Postseason</option>
             </select>
